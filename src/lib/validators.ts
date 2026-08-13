@@ -10,6 +10,6 @@ export function checkPasswordStrength(password: string) {
   return {
     ...checks,
     isValid: checks.minLength && checks.hasUpper && checks.hasLower,
-    score: passed, // 0 - 3
+    score: passed,
   };
 }

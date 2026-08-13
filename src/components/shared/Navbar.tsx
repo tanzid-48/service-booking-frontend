@@ -126,7 +126,6 @@ export function Navbar() {
       <div className="max-w-6xl mx-auto flex items-center justify-between px-4 h-16">
         <Logo />
 
-        {/* Desktop nav */}
         <nav className="hidden md:flex items-center gap-6 text-sm">
           <NavLinks />
         </nav>
@@ -136,7 +135,6 @@ export function Navbar() {
           <AuthActions />
         </div>
 
-        {/* Mobile hamburger */}
         <Sheet open={open} onOpenChange={setOpen}>
           <SheetTrigger
             render={

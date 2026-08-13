@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Check, X } from "lucide-react";
+import { toast } from "sonner";
 import { useAuth } from "@/context/AuthContext";
 import { checkPasswordStrength } from "@/lib/validators";
 import { Button } from "@/components/ui/button";
@@ -29,9 +30,7 @@ import {
 function PasswordRule({ ok, label }: { ok: boolean; label: string }) {
   return (
     <div
-      className={`flex items-center gap-1.5 text-xs ${
-        ok ? "text-teal-600" : "text-muted-foreground"
-      }`}
+      className={`flex items-center gap-1.5 text-xs ${ok ? "text-teal-600" : "text-muted-foreground"}`}
     >
       {ok ? <Check className="h-3 w-3" /> : <X className="h-3 w-3" />}
       {label}
@@ -48,28 +47,25 @@ export function RegisterForm() {
   const [password, setPassword] = useState("");
   const [phone, setPhone] = useState("");
   const [role, setRole] = useState("CUSTOMER");
-  const [error, setError] = useState("");
-  const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
 
   const strength = checkPasswordStrength(password);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
 
     if (!strength.isValid) {
-      setError("Please choose a stronger password.");
+      toast.error("Please choose a stronger password.");
       return;
     }
 
     setLoading(true);
     try {
       await register({ name, email, password, phone, role });
-      setSuccess(true);
-      setTimeout(() => router.push("/login"), 1200);
+      toast.success("Account created successfully! Please login.");
+      setTimeout(() => router.push("/login"), 800);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Registration failed");
+      toast.error(err instanceof Error ? err.message : "Registration failed");
     } finally {
       setLoading(false);
     }
@@ -144,13 +140,6 @@ export function RegisterForm() {
               </SelectContent>
             </Select>
           </div>
-
-          {error && <p className="text-sm text-destructive">{error}</p>}
-          {success && (
-            <p className="text-sm text-teal-600">
-              Account created! Redirecting to login...
-            </p>
-          )}
         </CardContent>
         <CardFooter className="flex flex-col gap-4 mt-4">
           <Button type="submit" className="w-full" disabled={loading}>
