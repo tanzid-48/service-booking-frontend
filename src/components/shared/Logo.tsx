@@ -4,7 +4,7 @@ export function Logo() {
   return (
     <Link href="/" className="flex items-center gap-2.5 group">
       {/* Custom mark: overlapping rounded shapes forming an abstract "booking check" */}
-      <span className="relative flex h-9 w-9 shrink-0 items-center justify-center">
+      <span className="relative flex h-6 w-6 shrink-0 items-center justify-center">
         <svg
           viewBox="0 0 36 36"
           className="h-9 w-9"

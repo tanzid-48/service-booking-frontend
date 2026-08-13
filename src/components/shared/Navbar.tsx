@@ -20,6 +20,7 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import { Logo } from "@/components/shared/Logo";
+import { ThemeToggle } from "@/components/shared/theme-toggle";
 
 function NavLinks({ onNavigate }: { onNavigate?: () => void }) {
   const { user } = useAuth();
@@ -130,7 +131,8 @@ export function Navbar() {
           <NavLinks />
         </nav>
 
-        <div className="hidden md:block">
+        <div className="hidden md:flex items-center gap-2">
+          <ThemeToggle />
           <AuthActions />
         </div>
 
@@ -143,14 +145,25 @@ export function Navbar() {
           >
             <Menu className="h-5 w-5" />
           </SheetTrigger>
-          <SheetContent side="right" className="w-72">
+          <SheetContent
+            side="right"
+            className="w-[72vw] max-w-[250px] sm:max-w-[320px]"
+          >
             <SheetHeader>
               <SheetTitle>
                 <Logo />
               </SheetTitle>
             </SheetHeader>
             <div className="flex flex-col gap-4 px-4 mt-4 text-sm">
-              <NavLinks onNavigate={() => setOpen(false)} />
+              <div className="flex items-center justify-between">
+                <span className="text-sm font-medium text-muted-foreground">
+                  Theme
+                </span>
+                <ThemeToggle />
+              </div>
+              <div className="border-t pt-4 flex flex-col gap-4">
+                <NavLinks onNavigate={() => setOpen(false)} />
+              </div>
               <div className="border-t pt-4">
                 <AuthActions onNavigate={() => setOpen(false)} />
               </div>
