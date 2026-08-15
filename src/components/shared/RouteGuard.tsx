@@ -7,7 +7,7 @@ import { Role } from "@/types/auth";
 
 type RouteGuardProps = {
   children: React.ReactNode;
-  allowedRoles?: Role[]; // না দিলে, শুধু login থাকলেই যথেষ্ট
+  allowedRoles?: Role[];
 };
 
 export function RouteGuard({ children, allowedRoles }: RouteGuardProps) {
@@ -23,11 +23,10 @@ export function RouteGuard({ children, allowedRoles }: RouteGuardProps) {
     }
 
     if (allowedRoles && !allowedRoles.includes(user.role)) {
-      router.replace("/");
+      router.replace("/unauthorized");
     }
   }, [user, loading, allowedRoles, router]);
 
-  // Loading state অথবা unauthorized হলে content দেখাবো না
   if (loading || !user) {
     return (
       <div className="flex min-h-[calc(100vh-4rem)] items-center justify-center">
